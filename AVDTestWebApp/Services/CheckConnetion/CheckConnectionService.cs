@@ -3,6 +3,7 @@ using AVDTestWebApp.Models;
 
 namespace AVDTestWebApp.Services.CheckConnetion
 {
+    /// <inheritdoc/>
     public class CheckConnectionService : ICheckConnectionService
     {
         private readonly IPingStrategy _pingStrategy;
