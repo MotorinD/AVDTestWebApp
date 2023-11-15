@@ -10,7 +10,7 @@ namespace AVDTestWebApp.Models
         /// <summary>
         /// Описание результата проверки подключения
         /// </summary>
-        public string Text { get; set; }
+        public string? Text { get; set; }
 
         /// <summary>
         /// Подключение успешно

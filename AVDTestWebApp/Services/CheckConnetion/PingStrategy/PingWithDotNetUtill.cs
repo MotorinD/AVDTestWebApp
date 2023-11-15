@@ -9,21 +9,29 @@ namespace AVDTestWebApp.Services.CheckConnetion.PingStrategy
     /// </summary>
     public class PingWithDotNetUtill : IPingStrategy
     {
-        public PingResult Execute(string domen)
+        /// <summary>
+        /// Выполнить проверку подключения с помощью .Net.NetworkInformation.Ping 
+        /// </summary>
+        /// <param name="domain">Домен или ip</param>
+        /// <returns>Модель PingResult</returns>
+        public PingResult Execute(string domain)
         {
             PingResult pingResult;
 
             try
             {
-                var pingReply = new Ping().Send(domen);
-                pingResult = GetResultFromReply(pingReply);
+                using (var ping = new Ping())
+                {
+                    var pingReply = ping.Send(domain);
+                    pingResult = GetResultFromReply(pingReply);
+                }
             }
             catch (PingException ex)
             {
                 pingResult = new PingResult
                 {
                     IsSuccess = false,
-                    Text = $"Не удалось подключиться, ошибка: {ex.InnerException?.Message ?? ex.Message}"
+                    Text = $"Не удалось подключиться: {ex.InnerException?.Message ?? ex.Message}"
                 };
             }
 

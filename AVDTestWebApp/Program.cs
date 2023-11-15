@@ -1,15 +1,24 @@
 using AVDTestWebApp.Interfaces;
 using AVDTestWebApp.Services.CheckConnetion;
 using AVDTestWebApp.Services.CheckConnetion.PingStrategy;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
+// Add services to the container
 builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    // Set the comments path for the Swagger JSON and UI.
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+
+    if (File.Exists(xmlPath))
+        c.IncludeXmlComments(xmlPath);
+});
 builder.Services.AddScoped<ICheckConnectionService>(o => new CheckConnectionService(new PingWithDotNetUtill()));
 
 var app = builder.Build();

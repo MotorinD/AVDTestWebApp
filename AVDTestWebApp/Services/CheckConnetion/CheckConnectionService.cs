@@ -9,14 +9,23 @@ namespace AVDTestWebApp.Services.CheckConnetion
     public class CheckConnectionService : ICheckConnectionService
     {
         private readonly IPingStrategy _pingStrategy;
+        /// <summary>
+        /// Конструктор
+        /// </summary>
+        /// <param name="pingStrategy">Реализация способа проверки подключения</param>
         public CheckConnectionService(IPingStrategy pingStrategy)
         {
             _pingStrategy = pingStrategy;
         }
 
-        public PingResult Ping(string domen)
+        /// <summary>
+        /// Проверить подключение к домену или ip
+        /// </summary>
+        /// <param name="domain"></param>
+        /// <returns></returns>
+        public PingResult Ping(string domain)
         {
-            return _pingStrategy.Execute(domen);
+            return _pingStrategy.Execute(domain);
         }
     }
 }

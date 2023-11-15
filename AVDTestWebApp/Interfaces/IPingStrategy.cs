@@ -3,10 +3,15 @@
 namespace AVDTestWebApp.Interfaces
 {
     /// <summary>
-    /// Способ проверки подключения
+    /// Способ проверки подключения к домену или ip
     /// </summary>
     public interface IPingStrategy
     {
-        PingResult Execute(string domen);
+        /// <summary>
+        /// Выполнить метод проверки подключения к домену или ip
+        /// </summary>
+        /// <param name="domain"></param>
+        /// <returns></returns>
+        PingResult Execute(string domain);
     }
 }
