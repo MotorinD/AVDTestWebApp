@@ -1,5 +1,6 @@
 using AVDTestWebApp.Interfaces;
-using AVDTestWebApp.Services;
+using AVDTestWebApp.Services.CheckConnetion;
+using AVDTestWebApp.Services.CheckConnetion.PingStrategy;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,7 +10,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddScoped<ICheckConnectionService, CheckConnectionService>();
+builder.Services.AddScoped<ICheckConnectionService>(o => new CheckConnectionService(new PingWithDotNetUtill()));
 
 var app = builder.Build();
 
