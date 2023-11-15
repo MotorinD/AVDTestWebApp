@@ -3,19 +3,35 @@ using AVDTestWebApp.Models;
 using AVDTestWebApp.Services.CheckConnetion;
 using AVDTestWebApp.Services.CheckConnetion.PingStrategy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Moq;
 
 namespace AVDTestWebApp.Tests.ControllersTests
 {
     public class PingControllerTest
     {
+        private readonly PingController _pingController;
+        public PingControllerTest()
+        {
+            var mockLogger = new Mock<ILogger<PingController>>();
+            _pingController = new PingController(new CheckConnectionService(new PingWithDotNetUtill()), mockLogger.Object);
+        }
+
+        [Fact]
+        public void PingBadRequestPostModelCheck()
+        {
+            var response = _pingController.Post(null);
+
+            Assert.IsType<BadRequestResult>(response);
+        }
+
         [Theory]
         [InlineData(null)]
         [InlineData("qwe@eee")]
-        public void PingBadRequestCheck(string domain)
+        public void PingBadRequestDomainCheck(string domain)
         {
-            var controller = new PingController(new CheckConnectionService(new PingWithDotNetUtill()), null);
-            var model = new PingPostModel { Domain = domain};
-            var response = controller.Post(model);
+            var postModel = new PingPostModel { Domain = domain};
+            var response = _pingController.Post(postModel);
 
             Assert.IsType<BadRequestResult>(response);
         }
@@ -23,10 +39,8 @@ namespace AVDTestWebApp.Tests.ControllersTests
         [Fact]
         public void PingLocalhostSuccessCheck()
         {
-            var controller = new PingController(new CheckConnectionService(new PingWithDotNetUtill()), null);
             var postModel = new PingPostModel { Domain = "localhost" };
-
-            var actionResult = controller.Post(postModel);
+            var actionResult = _pingController.Post(postModel);
 
             var okObjectResult = Assert.IsType<OkObjectResult>(actionResult);
             var resultModel = Assert.IsType<PingResult>(okObjectResult.Value);
