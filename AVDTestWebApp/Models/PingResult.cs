@@ -15,6 +15,6 @@ namespace AVDTestWebApp.Models
         /// <summary>
         /// Подключение успешно
         /// </summary>
-        public bool IsSuccess { get; set; }
+        public bool? IsSuccess { get; set; }
     }
 }
