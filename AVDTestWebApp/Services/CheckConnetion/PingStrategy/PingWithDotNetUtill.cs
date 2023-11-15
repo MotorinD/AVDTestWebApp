@@ -1,7 +1,6 @@
 ﻿using AVDTestWebApp.Interfaces;
 using AVDTestWebApp.Models;
 using System.Net.NetworkInformation;
-using System.Net.Sockets;
 
 namespace AVDTestWebApp.Services.CheckConnetion.PingStrategy
 {

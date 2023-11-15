@@ -10,7 +10,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddScoped<ICheckConnectionService>(o => new CheckConnectionService(new PingWithCommandPrompt()));
+builder.Services.AddScoped<ICheckConnectionService>(o => new CheckConnectionService(new PingWithDotNetUtill()));
 
 var app = builder.Build();
 
