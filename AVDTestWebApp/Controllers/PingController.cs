@@ -8,10 +8,13 @@ namespace AVDTestWebApp.Controllers
     [Route("[controller]")]
     public class PingController : ControllerBase
     {
-        ICheckConnectionService _checkConnectionService;
-        public PingController(ICheckConnectionService checkConnectionService)
+        private readonly ICheckConnectionService _checkConnectionService;
+        private readonly ILogger<PingController> _logger;
+
+        public PingController(ICheckConnectionService checkConnectionService, ILogger<PingController> logger)
         {
             _checkConnectionService = checkConnectionService;
+            _logger = logger;
         }
 
         [HttpPost(Name = "Ping")]
@@ -25,6 +28,7 @@ namespace AVDTestWebApp.Controllers
             }
             catch (Exception ex) 
             {
+                _logger.LogError($"Ошибка в Post методе Ping: {ex}");
                 return StatusCode(500, $"Ошибка на сервере: {ex}");
             }
         }
