@@ -3,9 +3,6 @@ using AVDTestWebApp.Models;
 
 namespace AVDTestWebApp.Services.CheckConnetion
 {
-    /// <summary>
-    /// Сервис проверки подключения к домену
-    /// </summary>
     public class CheckConnectionService : ICheckConnectionService
     {
         private readonly IPingStrategy _pingStrategy;
@@ -18,11 +15,7 @@ namespace AVDTestWebApp.Services.CheckConnetion
             _pingStrategy = pingStrategy;
         }
 
-        /// <summary>
-        /// Проверить подключение к домену или ip
-        /// </summary>
-        /// <param name="domain"></param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public PingResult Ping(string domain)
         {
             return _pingStrategy.Execute(domain);

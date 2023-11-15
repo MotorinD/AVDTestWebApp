@@ -19,7 +19,9 @@ builder.Services.AddSwaggerGen(c =>
     if (File.Exists(xmlPath))
         c.IncludeXmlComments(xmlPath);
 });
-builder.Services.AddScoped<ICheckConnectionService>(o => new CheckConnectionService(new PingWithDotNetUtill()));
+
+builder.Services.AddScoped<IPingStrategy, PingWithDotNetUtill>();
+builder.Services.AddScoped<ICheckConnectionService, CheckConnectionService>();
 
 var app = builder.Build();
 

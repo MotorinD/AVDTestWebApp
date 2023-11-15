@@ -9,11 +9,8 @@ namespace AVDTestWebApp.Services.CheckConnetion.PingStrategy
     /// </summary>
     public class PingWithCommandPrompt : IPingStrategy
     {
-        /// <summary>
-        /// Выполнить проверку подключения с помощью командной строки
-        /// </summary>
-        /// <param name="domain">Домен или ip</param>
-        /// <returns>Модель PingResult</returns>
+     
+        /// <inheritdoc/>
         public PingResult Execute(string domain)
         {
             var command = "/c ping " + domain;
